@@ -47,6 +47,21 @@ def backup():
 
     print('')   # Empty line to format output
 
+    # Configure rclone flags
+    if (sync == 'y' or cryptcheck == 'y'):
+        print('Choose optional flags (y/n):')
+
+        # --log-level
+        while (True):
+            debug = input('- Debug? ').strip().lower()
+
+            if (debug == 'y' or debug == 'n'):
+                break
+            else:
+                print('Please answer with (y/n).')
+
+        print('')
+
     # Execute sync
     if (sync == 'y'):
         command = ['./rclone', 'sync', 'data:', 'OneDrive:',    # Command
@@ -55,8 +70,12 @@ def backup():
                    '--no-update-dir-modtime',
                    '--modify-window', '1s',
                    '--filter-from', './filters.md',
-                   '--log-file', './rclone.log',
-                   '--verbose']
+                   '--log-file', './rclone.log']
+
+        if (debug == 'y'):
+            command += ['--log-level', 'DEBUG']
+        else:
+            command += ['--log-level', 'INFO']
 
         print('Sync started...')
         subprocess.run(command)
@@ -67,8 +86,12 @@ def backup():
         command = ['./rclone', 'cryptcheck', 'data:', 'OneDrive:',
                    '--config', './rclone.conf',
                    '--filter-from', './filters.md',
-                   '--log-file', './rclone.log',
-                   '--verbose']
+                   '--log-file', './rclone.log']
+
+        if (debug == 'y'):
+            command += ['--log-level', 'DEBUG']
+        else:
+            command += ['--log-level', 'INFO']
 
         print('Cryptcheck started...')
         subprocess.run(command)
