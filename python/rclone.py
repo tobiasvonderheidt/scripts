@@ -21,6 +21,17 @@ def main():
     subprocess.run(command)
     print('Sync finished!\n')
 
+    # Execute cryptcheck
+    command = ['./rclone', 'cryptcheck', 'data:', 'OneDrive:',
+                '--config', './rclone.conf',
+                '--filter-from', './filters.md',
+                '--log-file', './rclone.log',
+                '--verbose']
+
+    print('Cryptcheck started...')
+    subprocess.run(command)
+    print('Cryptcheck finished!\n')
+
     # Reminder to check logs
     print('Check the logs to see if there were any errors.\n')
 
