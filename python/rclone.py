@@ -1,12 +1,29 @@
 # Imports
 import subprocess
+import os
+
+
+# Function to update rclone
+def update():
+    # rclone can update itself since v1.55
+    print('Looking for updates...')
+
+    command = ['./rclone', 'selfupdate']
+
+    subprocess.run(command) # No try-except when calling rclone:
+                            # Prints out success/error message by itself, exit code 0 doesn't distinguish update or no update
+
+    # Delete old executable after update (Windows only)
+    if (os.name == 'nt'):
+        try:
+            os.remove('./rclone.old.exe')
+            print('Old executable was removed after the update.\n')
+        except FileNotFoundError:
+            print('There was no old executable to remove.\n')
 
 
 # Function to back up data to OneDrive
-def main():
-    # Opening message
-    print('Python script to back up data to OneDrive via rclone.\n')
-
+def backup():
     # Configure rclone commands
     print('Choose commands to execute (y/n):')
 
@@ -60,10 +77,17 @@ def main():
     # Reminder to check logs
     print('Check the logs to see if there were any errors.\n')
 
+
+# Execute the functions when script is called directly
+if (__name__ == '__main__'):
+    # Opening message
+    print('Python script to back up data to OneDrive via rclone.\n')
+
+    # Update rclone
+    update()
+
+    # Back up data
+    backup()
+
     # Don't close window immediately when script finishes
     input('Press enter to exit!')
-
-
-# Execute main when script is called directly
-if (__name__ == '__main__'):
-    main()
