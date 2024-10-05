@@ -8,7 +8,7 @@ def update():
     # rclone can update itself since v1.55
     print('Looking for updates...')
 
-    command = ['./rclone', 'selfupdate']
+    command = ['rclone', 'selfupdate']
 
     subprocess.run(command) # No try-except when calling rclone:
                             # Prints out success/error message by itself, exit code 0 doesn't distinguish update or no update
@@ -73,8 +73,8 @@ def backup():
 
     # Execute sync
     if (sync == 'y'):
-        command = ['./rclone', 'sync', 'data:', 'OneDrive:',    # Command
-                   '--config', './rclone.conf',                 # Flags
+        command = ['rclone', 'sync', 'data:', 'OneDrive:',  # Command
+                   '--config', './rclone.conf',             # Flags
                    '--create-empty-src-dirs',
                    '--no-update-dir-modtime',
                    '--modify-window', '1s',
@@ -95,7 +95,7 @@ def backup():
 
     # Execute cryptcheck
     if (cryptcheck == 'y'):
-        command = ['./rclone', 'cryptcheck', 'data:', 'OneDrive:',
+        command = ['rclone', 'cryptcheck', 'data:', 'OneDrive:',
                    '--config', './rclone.conf',
                    '--filter-from', './filters.md',
                    '--log-file', './rclone.log']
