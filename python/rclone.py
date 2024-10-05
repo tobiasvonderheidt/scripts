@@ -60,6 +60,15 @@ def backup():
             else:
                 print('Please answer with (y/n).')
 
+        # --dry-run
+        while (True):
+            dryrun = input('- Dry run? ').strip().lower()
+
+            if (dryrun == 'y' or dryrun == 'n'):
+                break
+            else:
+                print('Please answer with (y/n).')
+
         print('')
 
     # Execute sync
@@ -77,6 +86,9 @@ def backup():
         else:
             command += ['--log-level', 'INFO']
 
+        if (dryrun == 'y'):
+            command += ['--dry-run']
+
         print('Sync started...')
         subprocess.run(command)
         print('Sync finished!\n')
@@ -92,6 +104,9 @@ def backup():
             command += ['--log-level', 'DEBUG']
         else:
             command += ['--log-level', 'INFO']
+
+        if (dryrun == 'y'):
+            command += ['--dry-run']
 
         print('Cryptcheck started...')
         subprocess.run(command)
