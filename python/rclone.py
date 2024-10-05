@@ -121,11 +121,24 @@ if (__name__ == '__main__'):
     # Opening message
     print('Python script to back up data to OneDrive via rclone.\n')
 
-    # Update rclone
+    # Update rclone only on startup
     update()
 
     # Back up data
-    backup()
+    while (True):
+        backup()
 
-    # Don't close window immediately when script finishes
-    input('Press enter to exit!')
+        # Ask to run the script again
+        while (True):
+            restart = input('Run the script again (y/n)? ').strip().lower()
+
+            if (restart == 'y' or restart == 'n'):
+                break
+            else:
+                print('Please answer with (y/n).')
+
+        if (restart == 'y'):
+            print('')
+            continue
+        if (restart == 'n'):
+            break
