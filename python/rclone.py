@@ -79,7 +79,8 @@ def backup():
                    '--no-update-dir-modtime',
                    '--modify-window', '1s',
                    '--filter-from', './filters.md',
-                   '--log-file', './rclone.log']
+                   '--log-file', './rclone.log',
+                   '--stats', '0']
 
         if (debug == 'y'):
             command += ['--log-level', 'DEBUG']
@@ -98,7 +99,8 @@ def backup():
         command = ['rclone', 'cryptcheck', 'data:', 'OneDrive:',
                    '--config', './rclone.conf',
                    '--filter-from', './filters.md',
-                   '--log-file', './rclone.log']
+                   '--log-file', './rclone.log',
+                   '--stats', '0']
 
         if (debug == 'y'):
             command += ['--log-level', 'DEBUG']
